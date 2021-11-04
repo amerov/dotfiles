@@ -1,0 +1,44 @@
+[user]
+	name = amerov
+	email = maratamerov@gmail.com
+[push]
+    default = current
+[color]
+    sh = auto
+    ui = true
+[alias]
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    l = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    lo = log --no-merges --oneline
+    p = pull -v
+    s = status
+    ch = checkout
+    b = branch
+    sdiff = diff --staged
+[rerere]
+    enabled = true
+    autoupdate = true
+[core]
+    autocrlf = input
+    excludesfile = /home/amerov/.gitexcludes
+    #pager = delta
+[merge]
+    tool = vimdiff
+
+[difftool]
+    prompt = true
+[diff]
+    tool = vimdiff
+    algorithm = patience
+[difftool "vimdiff"]
+    cmd = "vim -d -m -n \"$LOCAL\" \"$REMOTE\""
+[credential]
+    helper = cache
+[pull]
+    rebase = false
+
+# [delta]
+    # syntax-theme = GitHub
+    # line-numbers = true
+# [interactive]
+    # diffFilter = delta --color-only

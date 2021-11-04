@@ -1,0 +1,101 @@
+{
+    "terminal.integrated.gpuAcceleration": "off",
+    "files.autoSave": "onFocusChange",
+    "files.autoSaveDelay": 300,
+    "editor.renderWhitespace": "trailing",
+    "files.exclude": {
+        "**/.idea": true
+    },
+    "editor.wordWrapColumn": 120,
+    "ruby.intellisense": "rubyLocate",
+    "ruby.useBundler": true,
+    "ruby.useLanguageServer": true,
+    "editor.tokenColorCustomizations": {
+        "[Default Dark+]": {
+            "textMateRules": [
+                {
+                    "scope": [
+                        "meta.function-call.ruby entity.name.function.ruby",
+                        "support.function.core.ruby",
+                        "support.function.kernel.ruby",
+                        "variable.other.ruby"
+                    ],
+                    "settings": {
+                        "foreground": "#D4D4D4"
+                    }
+                },
+                {
+                    "scope": "keyword.other.special-method.ruby",
+                    "settings": {
+                        "foreground": "#D4D4D4"
+                    }
+                }
+            ]
+        },
+        "[Default Light+]": {
+
+            "textMateRules": [
+                {
+                    "scope": [
+                        "meta.function-call.ruby entity.name.function.ruby",
+                        "support.function.core.ruby",
+                        "support.function.kernel.ruby",
+                        "variable.other.ruby"
+                    ],
+                    "settings": {
+                        "foreground": "#000000"
+                    }
+                },
+                {
+                    "scope": "keyword.other.special-method.ruby",
+                    "settings": {
+                        "foreground": "#000000"
+                    }
+                }
+            ]
+        }
+    },
+    "workbench.startupEditor": "newUntitledFile",
+    "editor.quickSuggestions": {
+        "strings": true
+    },
+    "editor.semanticHighlighting.enabled": true,
+    "editor.minimap.enabled": false,
+    "gitlens.currentLine.enabled": false,
+    "gitlens.hovers.currentLine.over": "line",
+    "files.trimTrailingWhitespace": true,
+    "editor.formatOnPaste": true,
+    "editor.renderControlCharacters": true,
+    "clipboard-manager.snippet.enabled": false,
+    "workbench.editor.limit.enabled": true,
+    "ruby.rubocop.useBundler": true,
+    "ruby.format": "rubocop",
+    "gitlens.advanced.fileHistoryShowAllBranches": true,
+    "cSpell.language": "en,ru,ru-RU",
+    "extensions.autoUpdate": false,
+    "[ruby]": {
+        "editor.defaultFormatter": "rebornix.ruby"
+    },
+    "editor.suggest.insertMode": "replace",
+    "editor.suggest.showStatusBar": true,
+    "terminal.integrated.fontSize": 13,
+    "gitlens.codeLens.enabled": false,
+    "editor.tabSize": 2,
+    "terminal.integrated.confirmOnExit": "hasChildProcesses",
+    "terminal.integrated.enableBell": true,
+    "terminal.integrated.scrollback": 2000,
+    "telemetry.telemetryLevel": "error",
+    "bookmarks.useWorkaroundForFormatters": true,
+    "emmet.includeLanguages": {
+        "erb": "html"
+    },
+    "files.associations": {
+        "*.html.erb": "erb"
+    },
+    "html.format.indentHandlebars": true,
+    "terminal.integrated.lineHeight": 0,
+    "terminal.integrated.copyOnSelection": true,
+    "editor.fontFamily": "Jetbrains Mono",
+    "editor.fontSize": 13,
+    // "window.zoomLevel": 0.2,
+}

@@ -1,0 +1,12 @@
+" vim -u ~/.vim/vimrc.min
+if has('vim_starting')
+  set nocompatible
+endif
+
+set packpath=
+set runtimepath+=~/.config/nvim/pack/minpac/start/fern.vim
+
+filetype plugin indent on
+syntax on
+
+autocmd CursorHold * echo 'cursor hold'
