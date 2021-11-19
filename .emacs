@@ -31,22 +31,22 @@
 (use-package vterm
   :ensure t)
 (use-package diff-hl :ensure t)
-(use-package which-key :ensure t)
-(use-package emmet-mode :ensure t)
+
+;; (use-package emmet-mode :ensure t)
 (use-package rspec-mode :ensure t)
 (use-package highlight-thing :ensure t)
 (use-package avy :ensure t)
 (use-package prescient :ensure t)
 (use-package selectrum-prescient :ensure t)
 (use-package selectrum :ensure t)
-(use-package add-node-modules-path :ensure t)
+;;(use-package add-node-modules-path :ensure t)
 
 (use-package lsp-mode
   :init
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
   (setq lsp-keymap-prefix "C-c l")
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (vue-mode . lsp)
+         ;; (vue-mode . lsp)
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp :ensure t)
@@ -103,7 +103,7 @@
 (recentf-mode t)
 (global-diff-hl-mode t)
 (which-key-mode t)
-(global-highlight-thing-mode t)
+;; (global-highlight-thing-mode t)
 (selectrum-mode t)
 (selectrum-prescient-mode +1)
 (prescient-persist-mode +1)
@@ -116,7 +116,6 @@
 (setq org-directory "~/Dropbox/orgfiles/org")
 (setq org-startup-indented t)
 (setq org-src-fontify-natively t)
-
 
 ;; Hooks
 (add-hook 'ruby-mode-hook
@@ -140,6 +139,7 @@
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
 
 (setq web-mode-script-padding 0)
 ;; (eval-after-load 'js-mode
@@ -156,7 +156,6 @@
    web-mode-enable-current-element-highlight t
    )
 
-
 ;; Custom functions
 
 ;; begin Hotkeys
@@ -164,7 +163,6 @@
 (global-set-key (kbd "M-g w") 'avy-goto-word-1)
 
 ;; end Hotkeys
-
 
 ;; TODO: extract
 (defun my/copy-file-name-to-clipboard ()
@@ -177,7 +175,18 @@
       (kill-new filename)
       (message "Copied buffer file name '%s' to the clipboard." filename))))
 
-(load-theme 'zenburn t)
+;; (load-theme 'zenburn t)
+
+(defconst y-or-n-p-ret-yes-map
+  (let ((map (make-sparse-keymap)))
+    (set-keymap-parent map y-or-n-p-map)
+    (define-key map [return] 'act)
+    map)
+  "A keymap for y-or-n-p with RET meaning \"yes\".")
+
+;; this asks a y/n question with RET meaning "yes"
+;;(let ((y-or-n-p-map y-or-n-p-ret-yes-map))
+ ;; (y-or-n-p "yes or no? "))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -187,7 +196,7 @@
  '(custom-safe-themes
    '("3b8284e207ff93dfc5e5ada8b7b00a3305351a3fb222782d8033a400a48eca48" default))
  '(package-selected-packages
-   '(poly-erb company-web company-box lsp-ui lsp-mode polymode add-node-modules-path selectrum-prescient prescient selectrum consult avy highlight-thing rspec-mode emmet-mode which-key diff-hl vterm exec-path-from-shell zenburn-theme yasnippet-snippets web-mode vue-mode use-package undo-tree super-save smartparens projectile markdown-mode magit flycheck dumb-jump crux company)))
+   '(poly-erb company-web company-box lsp-ui lsp-mode polymode add-node-modules-path selectrum-prescient prescient selectrum consult avy highlight-thing rspec-mode which-key diff-hl vterm exec-path-from-shell zenburn-theme yasnippet-snippets web-mode vue-mode use-package undo-tree super-save smartparens projectile markdown-mode magit flycheck dumb-jump crux company)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

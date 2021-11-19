@@ -109,8 +109,8 @@ Plug 'liuchengxu/vim-which-key'
 Plug 'tpope/vim-dispatch'
 " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-" Plug 'kyazdani42/nvim-web-devicons' " for file icons
-" Plug 'kyazdani42/nvim-tree.lua'
+Plug 'kyazdani42/nvim-web-devicons' " for file icons
+Plug 'kyazdani42/nvim-tree.lua'
 call plug#end()
 
 filetype indent on
@@ -197,6 +197,7 @@ endif
 if has('mouse')
   set mouse=a
 endif
+
 if has("persistent_undo")
   set undodir=~/.nvim/undo
   set undofile
@@ -265,17 +266,17 @@ let g:jellybeans_overrides = {
       \    'jsThis': { 'guifg': 'cf6a4c' }
       \}
 
-" set background=light
-set background=dark
+set background=light
+" set background=dark
 
 " let g:jellybeans_background_color="000000"
 " colorscheme jellybeans
 " colo dracula
-colorscheme gruvbox
+" colorscheme gruvbox
 " colorscheme PaperColor
 " colorscheme spacegray
 " colorscheme lucius
-" colo one
+colo one
 " colo solarized8
 " colo snow
 " colo afterglow
@@ -410,7 +411,7 @@ map <leader>sm :Marks<CR>
 map <leader>p p=`]
 map <leader>sb :BLines<CR>
 map <leader>sl :Lines<CR>
-map <leader>fs :w<CR>
+" map <leader>fs :w<CR>
 imap <C-l> <Esc>:w<CR>
 map <leader>gg :Git<CR>
 map <leader>gB :Git blame<CR>
@@ -425,9 +426,6 @@ map <leader>tf :TestFile<CR>
 map <leader>tl :TestLast<CR>
 map <leader>tv :TestVisit<CR>
 map <leader>lf :ALEFix<CR>
-map <leader>r :Rex<CR>
-map <leader>o :Ex<CR>
-map <leader>d :bdelete<CR>
 
 " nmap <silent> <F2> <Plug>(coc-diagnostic-next)
 " nmap <silent> <F4> <Plug>(coc-definition)
@@ -435,7 +433,9 @@ nnoremap <silent> <a-h> :SidewaysLeft<cr>
 nnoremap <silent> <a-l> :SidewaysRight<cr>
 " nnoremap <silent> <leader>e :FloatermNew nnn<cr>
 
-nnoremap <leader>e :CocCommand explorer<CR>
+" nnoremap <leader>e :CocCommand explorer<CR>
+nnoremap <leader>e :NvimTreeToggle<CR>
+
 
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :WhichKeyVisual '<Space>'<CR>
@@ -662,4 +662,16 @@ let g:coc_disable_transparent_cursor = 1
 "     setlocal comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
 "   endif
 " endfunction
+
+let g:nvim_tree_show_icons = {
+   \ 'git': 1,
+   \ 'folders': 0,
+   \ 'files': 0,
+   \ 'folder_arrows': 0,
+   \ }
+
+lua <<EOF
+  require'nvim-tree'.setup()
+EOF
+
 
