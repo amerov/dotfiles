@@ -95,8 +95,10 @@ Plug 'jamessan/vim-gnupg'
 Plug 'tpope/vim-unimpaired'
 Plug 'nelstrom/vim-visual-star-search'
 Plug 'tpope/vim-scriptease'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" Plug 'junegunn/fzf.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 Plug 'tyru/open-browser.vim'
 Plug 'pechorin/any-jump.vim'
 Plug 'junegunn/vim-peekaboo'
@@ -109,7 +111,7 @@ Plug 'liuchengxu/vim-which-key'
 Plug 'tpope/vim-dispatch'
 " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-Plug 'kyazdani42/nvim-web-devicons' " for file icons
+" Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
 call plug#end()
 
@@ -402,17 +404,24 @@ endfunction
 nmap <leader>sp <Plug>CtrlSFPrompt
 vmap <leader>sp <Plug>CtrlSFVwordPath
 map <leader>' :CtrlSFToggle<CR>
-map <leader>, :Buffers<CR>
-map <leader>si :BTags<CR>
-map <leader>ff :Files<CR>
+nnoremap <leader>, <cmd>Telescope buffers<cr>
+" map <leader>si :BTags<CR>
+nnoremap <leader>si :Vista<cr>
+nnoremap <leader>sb :lua require'telescope.builtin'.current_buffer_fuzzy_find()<cr>
+
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <Leader>fr :lua require'telescope.builtin'.oldfiles{}<cr>
+nnoremap <Leader>o :lua require'telescope.builtin'.file_browser{dir_icon = '🗀'}<cr>
+
 " map <leader>fr :CocList mru<CR>
-map <leader>fr :History<CR>
-map <leader>sm :Marks<CR>
+" map <leader>fr :History<CR>
+" map <leader>sm :Marks<CR>
 map <leader>p p=`]
-map <leader>sb :BLines<CR>
-map <leader>sl :Lines<CR>
+" map <leader>sb :BLines<CR>
+" map <leader>sl :Lines<CR>
 " map <leader>fs :w<CR>
-imap <C-l> <Esc>:w<CR>
+" imap <C-l> <Esc>:w<CR>
 map <leader>gg :Git<CR>
 map <leader>gB :Git blame<CR>
 map <leader>gc :Git checkout
@@ -471,7 +480,7 @@ let g:vim_vue_plugin_config = {
       \'foldexpr': 0,
       \'debug': 0,
       \}
-let g:fzf_history_dir = '~/.local/share/fzf-history'
+" let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 let g:netrw_altfile = 1
 
@@ -582,7 +591,7 @@ augroup END
 " let g:CtrlSpaceDefaultMappingKey = "<C-space> "
 " let g:CtrlSpaceSaveWorkspaceOnSwitch = 1
 " let g:CtrlSpaceSaveWorkspaceOnExit = 1
-let $FZF_DEFAULT_COMMAND="rg --files --hidden -g '!/.git'"
+" let $FZF_DEFAULT_COMMAND="rg --files --hidden -g '!/.git'"
 
 
 " lua <<EOF
@@ -630,7 +639,7 @@ let g:netrw_banner=0
 
 let g:netrw_list_hide=netrw_gitignore#Hide()
 
-let g:fzf_buffers_jump = 1
+" let g:fzf_buffers_jump = 1
 
 " let g:vimwiki_list = [{'path': '~/Dropbox/wiki/', 'syntax': 'markdown', 'ext': '.md'}]
 " let g:vimwiki_ext2syntax = {}
@@ -674,4 +683,5 @@ lua <<EOF
   require'nvim-tree'.setup()
 EOF
 
+let g:nvim_tree_indent_markers = 1
 
