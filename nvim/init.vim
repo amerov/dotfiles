@@ -1,9 +1,19 @@
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'honza/vim-snippets'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'honza/vim-snippets'
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'L3MON4D3/LuaSnip'
+Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'rafamadriz/friendly-snippets'
+
 " Plug 'junegunn/vim-easy-align'
 " Plug 'tpope/vim-vinegar'
-Plug 'chrisbra/NrrwRgn'
+" Plug 'chrisbra/NrrwRgn'
 Plug 'AndrewRadev/inline_edit.vim'
 Plug 'AndrewRadev/deleft.vim'
 Plug 'AndrewRadev/bufferize.vim'
@@ -12,7 +22,8 @@ Plug 'liuchengxu/vista.vim'
 Plug 'Yggdroot/indentLine'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
-Plug 'thinca/vim-quickrun'
+" Plug 'thinca/vim-quickrun'
+
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-sleuth'
 Plug 'duggiefresh/vim-easydir'
@@ -26,7 +37,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'airblade/vim-gitgutter'
 Plug 'rbong/vim-flog'
-Plug 'vim-ruby/vim-ruby'
+" Plug 'vim-ruby/vim-ruby'
 " Plug 'tpope/vim-rails'
 " Plug 'airblade/vim-localorie'
 " Plug 'stefanoverna/vim-i18n'
@@ -85,18 +96,19 @@ Plug 'kopischke/vim-fetch'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'andymass/vim-matchup'
-Plug 'tpope/vim-dadbod'
+" Plug 'tpope/vim-dadbod'
 Plug 'simnalamburt/vim-mundo'
-Plug 'machakann/vim-highlightedyank'
+" Plug 'machakann/vim-highlightedyank'
 " Plug 'devjoe/vim-codequery'
 " Plug 'kshenoy/vim-signature'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'AndrewRadev/switch.vim'
-Plug 'elixir-editors/vim-elixir'
+" Plug 'elixir-editors/vim-elixir'
 Plug 'rhysd/vim-grammarous'
 Plug 'jamessan/vim-gnupg'
 Plug 'tpope/vim-unimpaired'
-Plug 'nelstrom/vim-visual-star-search'
+" Plug 'nelstrom/vim-visual-star-search'
+Plug 'subnut/visualstar.vim'
 Plug 'tpope/vim-scriptease'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -104,18 +116,23 @@ Plug 'junegunn/fzf.vim'
 " Plug 'nvim-telescope/telescope.nvim'
 Plug 'tyru/open-browser.vim'
 Plug 'pechorin/any-jump.vim'
-Plug 'junegunn/vim-peekaboo'
+" Plug 'junegunn/vim-peekaboo'
+Plug 'tversteeg/registers.nvim', { 'branch': 'main' }
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'voldikss/vim-floaterm'
-Plug 'Asheq/close-buffers.vim'
+" Plug 'Asheq/close-buffers.vim'
 Plug 'Shougo/context_filetype.vim'
 Plug 'liuchengxu/vim-which-key'
 " Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-dispatch'
-" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
+
+Plug 'ethanholz/nvim-lastplace'
+" Plug 'Pocco81/AutoSave.nvim'
+Plug 'RRethy/vim-illuminate'
 call plug#end()
 
 filetype indent on
@@ -151,8 +168,8 @@ set wildignore+=*/coverage/*
 set wildignore+=*/.hg/*,*/.svn/*,*/.DS_Store
 set lazyredraw
 set updatetime=200
-" set incsearch
-set inccommand=split
+set incsearch
+" set inccommand=split
 set title
 set titlestring=Neovim\ %{getcwd()}
 set list
@@ -172,6 +189,8 @@ set nohlsearch
 set keymap=russian-jcukenwin
 set iminsert=0
 set imsearch=0
+
+set completeopt=menu,menuone,noselect
 
 if has("patch-8.1.1564")
   " Recently vim can merge signcolumn and number column into one
@@ -317,8 +336,6 @@ hi link rubyAttribute rubyMethodName
 hi link TSSymbol String
 hi link TSParameter cleared
 " let g:monochrome_italic_comments = 1
-
-
 
 let g:ale_lint_on_text_changed = 0
 let g:ale_lint_on_save = 1
@@ -492,40 +509,40 @@ let g:vim_vue_plugin_config = {
       \}
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
-let g:netrw_altfile = 1
+" let g:netrw_altfile = 1
 
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" inoremap <silent><expr> <TAB>
+"      \ pumvisible() ? "\<C-n>" :
+"      \ <SID>check_back_space() ? "\<TAB>" :
+"      \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
 
 " Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+" inoremap <silent><expr> <c-space> coc#refresh()
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-autocmd CursorHold * call CocActionAsync('highlight')
+" autocmd CursorHold * call CocActionAsync('highlight')
 " nmap <F6> <Plug>(coc-rename)
+" 
+" augroup mygroup
+"   autocmd!
+"   " Setup formatexpr specified filetype(s).
+"   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+"   " Update signature help on jump placeholder
+"   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+" augroup end
+" command! -nargs=0 Format :call CocAction('format')
+" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
-command! -nargs=0 Format :call CocAction('format')
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-imap <C-k> <Plug>(coc-snippets-expand-jump)
+" imap <C-k> <Plug>(coc-snippets-expand-jump)
 " Use <C-j> for jump to next placeholder, it's default of coc.nVIM
 " let g:coc_snippet_next = '<c-j>'
 " Use <C-k> for jump to previous placeholder, it's default of coc.nVIM
@@ -543,7 +560,7 @@ endif
 
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 
-let g:coc_global_extensions = ['coc-json', 'coc-highlight', 'coc-html', 'coc-snippets', 'coc-explorer', 'coc-lists']
+" let g:coc_global_extensions = ['coc-json', 'coc-highlight', 'coc-html', 'coc-snippets', 'coc-explorer', 'coc-lists']
 let g:airline_powerline_fonts = 1
 
 " let g:chadtree_settings = { "theme": { "icon_glyph_set": "emoji" }}
@@ -588,12 +605,17 @@ let g:airline_powerline_fonts = 1
 let test#strategy = "dispatch"
 " let g:vista_ctags_executable = "u_ctags"
 " let g:fzf_tags_command = 'u_ctags -R'
-let g:quickrun_no_default_key_mappings=1
+" let g:quickrun_no_default_key_mappings=1
 
 augroup vimrc-incsearch-highlight
   autocmd!
   autocmd CmdlineEnter /,\? :setl hlsearch
   autocmd CmdlineLeave /,\? :setl nohlsearch
+augroup END
+
+augroup highlight_yank
+    autocmd!
+    au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=700}
 augroup END
 
 " highlight CocHighlightText  ctermfg=LightMagenta    guifg=LightMagenta
@@ -604,39 +626,39 @@ augroup END
 let $FZF_DEFAULT_COMMAND="rg --files --hidden -g '!/.git'"
 
 
-" lua <<EOF
-" require'nvim-treesitter.configs'.setup {
-"   ensure_installed = { "ruby","javascript","html","json","python","yaml","css","scss", "comment" }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-"   -- ensure_installed = { "ruby", "comment" }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-"   ignore_install = { "vue" }, -- List of parsers to ignore installing
-"   highlight = {
-"     enable = true,              -- false will disable the whole extension
-"     disable = { "vue" },  -- list of language that will be disabled
-"     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-"     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-"     -- Using this option may slow down your editor, and you may see some duplicate highlights.
-"     -- Instead of true it can also be a list of languages
-"     additional_vim_regex_highlighting = false,
-"   },
-"   incremental_selection = {
-"     enable = true,
-"     keymaps = {
-"       init_selection = "gnn",
-"       node_incremental = "grn",
-"       scope_incremental = "grc",
-"       node_decremental = "grm",
-"     },
-"   },
-"  indent = {
-"     enable = true,
-"     disable = { "vue" },
-"   },
-"   matchup = {
-"     enable = true,              -- mandatory, false will disable the whole extension
-"     disable = { "vue" },  -- optional, list of language that will be disabled
-"   },
-" }
-" EOF
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "ruby","javascript","html","json","python","yaml","css","scss", "comment", "vue" }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  -- ensure_installed = { "ruby", "comment" }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  -- ignore_install = { "vue" }, -- List of parsers to ignore installing
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    disable = { "ruby" },  -- list of language that will be disabled
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "gnn",
+      node_incremental = "grn",
+      scope_incremental = "grc",
+      node_decremental = "grm",
+    },
+  },
+ indent = {
+    enable = true,
+    -- disable = { "vue" },
+  },
+  matchup = {
+    enable = true,              -- mandatory, false will disable the whole extension
+    -- disable = { "vue" },  -- optional, list of language that will be disabled
+  },
+}
+EOF
 
 " highlight TSKeyword ctermfg=11 guifg='#00ff00'
 " highlight TSLabel ctermfg=33 guifg='#ff0000'
@@ -655,7 +677,7 @@ let g:fzf_buffers_jump = 1
 " let g:vimwiki_ext2syntax = {}
 let g:airline_highlighting_cache = 1
 
-let g:coc_disable_transparent_cursor = 1
+" let g:coc_disable_transparent_cursor = 1
 
 " let g:floatterm_width = 150
 " let g:floatterm_height = 40
@@ -696,7 +718,102 @@ lua <<EOF
   }, })
 EOF
 
+
+lua <<EOF
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
+
+  local lspconfig = require('lspconfig')
+  -- vim.o.completeopt = 'menuone,noselect'
+  local luasnip = require 'luasnip'
+  local cmp = require 'cmp'
+
+  require("luasnip/loaders/from_vscode").lazy_load()
+
+  local has_words_before = function()
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+  end
+
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      require('luasnip').lsp_expand(args.body)
+    end,
+  },
+  mapping = {
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-n>'] = cmp.mapping.select_next_item(),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+ ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+  },
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+    { name = 'path' },
+    { name = 'buffer' },
+  },
+}
+EOF
+
 let g:nvim_tree_indent_markers = 1
 " let g:wiki_root = '~/wiki'
 " let g:wiki_filetypes = ['md']
 " let g:wiki_link_extension = '.md'
+
+
+lua require'nvim-lastplace'.setup{}
+let g:lastplace_ignore_buftype = "quickfix,nofile,help,ctrlsf"
+let g:lastplace_ignore_filetype = "gitcommit,gitrebase,hgcommit"
+let g:lastplace_open_folds = 1
+
+"lua << EOF
+"local autosave = require("autosave")
+
+" autosave.setup(
+"     {
+"         enabled = true,
+"         execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
+"         events = {"InsertLeave", "TextChanged"},
+"         -- events = {"InsertLeave", "TextChanged", "WinLeave", "FocusLost", "BufHidden", "BufLeave"},
+"         conditions = {
+"             exists = true,
+"             filename_is_not = {"./git/*"},
+"             filetype_is_not = {},
+"             modifiable = true
+"         },
+"         write_all_buffers = false,
+"         on_off_commands = true,
+"         clean_command_line_interval = 0,
+"         debounce_delay = 135
+"     }
+" )
+" EOF

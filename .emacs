@@ -73,6 +73,9 @@
 (use-package org-cliplink :ensure t)
 (use-package evil :ensure t)
 (use-package evil-surround :ensure t)
+(use-package deadgrep :ensure t)
+
+(global-set-key (kbd "<f5>") #'deadgrep)
 ;; (use-package evil-org
 ;;   :ensure t
 ;;   :after org
@@ -81,7 +84,9 @@
 ;;   (require 'evil-org-agenda)
 ;;   (evil-org-agenda-set-keys))
 
-(setq consult-project-root-function projectile-project-root)
+;;(autoload 'projectile-project-root "projectile")
+;;(setq consult-project-root-function projectile-project-root)
+(setq consult-project-root-function #'vc-root-dir)
 ;; Always load newest byte code
 (setq load-prefer-newer t)
 ;; reduce the frequency of garbage collection by making it happen on
@@ -117,16 +122,12 @@
 (savehist-mode t)
 (global-diff-hl-mode t)
 (which-key-mode t)
-
 (selectrum-mode t)
-(selectrum-prescient-mode +1)
-
-;;(prescient-persist-mode +1)
+(prescient-persist-mode +1)
 
 ;(desktop-save-mode t)
 (super-save-mode t)
-;(evil-mode t)
-;(evil-surround-mode t)
+
 
 (setq x-select-enable-clipboard t)
 (setq ns-pop-up-frames nil)
@@ -137,16 +138,21 @@
 (setq org-default-notes-file (concat org-directory "/todo.org"))
 
 (setq org-capture-templates
-      '(("t" "Task"  entry
+      '(("t" "Todo"  entry
                (file "~/Dropbox/orgfiles/org/todo.org")
-               "* TODO %?" :empty-lines 1)
+               "* TODO %?" :empty-lines 0)
         ("n" "Note"  entry
                (file "~/Dropbox/orgfiles/org/notes.org")
-               "* %?%u" :empty-lines 1)
+               "* %?%u" :empty-lines 0)
         ("w" "Work"  entry
                (file "~/Dropbox/orgfiles/org/work.org")
-               "* %?" :empty-lines 1)
-      
+               "* %?" :empty-lines 0)
+        ("i" "Idea"  entry
+               (file "~/Dropbox/orgfiles/org/ideas.org")
+               "* %?" :empty-lines 0)
+        ("e" "English words"  entry
+               (file "~/Dropbox/orgfiles/org/english.words.org")
+               "* %?" :empty-lines 0)
         ))
 
 ;; (add-to-list 'org-capture-templates
@@ -183,7 +189,7 @@
            (format " in [%s]" project-name))))))
 
 (setq diff-hl-show-staged-changes nil)
-(setq flycheck-check-syntax-automatically '(mode-enabled save))
+;;(setq flycheck-check-syntax-automatically '(mode-enabled save))
 (setq company-auto-commit nil)
 
 (setq-default flycheck-disabled-checkers '(ruby-reek))
@@ -199,9 +205,10 @@
                         (lambda (command) (append '("bundle" "exec") command)))))
 
 (flycheck-add-mode 'javascript-eslint 'vue-mode)
- (flycheck-add-mode 'javascript-eslint 'vue-html-mode)
- (flycheck-add-mode 'javascript-eslint 'css-mode)
- (add-hook 'vue-mode-hook 'flycheck-mode)
+(flycheck-add-mode 'javascript-eslint 'vue-html-mode)
+;;(flycheck-add-mode 'javascript-eslint 'css-mode)
+;;(flycheck-add-mode 'javascript-eslint 'web-mode)
+;;(add-hook 'vue-mode-hook 'flycheck-mode)
 
 
 (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
@@ -230,11 +237,11 @@
  web-mode-enable-current-element-highlight t
  )
 
-
 ;; Custom functions
 
 ;; begin Hotkeys
 (global-set-key (kbd "C-:") 'avy-goto-char)
+(global-set-key (kbd "C-,") 'ibuffer)
 ;;(global-set-key (kbd "M-g w") 'avy-goto-word-1)
 
 ;; end Hotkeys
@@ -250,7 +257,35 @@
       (kill-new filename)
       (message "Copied buffer file name '%s' to the clipboard." filename))))
 
-;;(load-theme 'zenburn t)
+(defun my/use-eslint-from-node-modules ()
+  (let* ((root (locate-dominating-file
+                (or (buffer-file-name) default-directory)
+                "node_modules"))
+         (eslint
+          (and root
+               (expand-file-name "node_modules/.bin/eslint"
+                                 root))))
+    (when (and eslint (file-executable-p eslint))
+      (setq-local flycheck-javascript-eslint-executable eslint))))
+
+(add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
+
+;; (flycheck-add-mode 'javascript-eslint 'web-mode)
+
+;; (defun my/configure-web-mode-flycheck-checkers ()
+;;   ;; in order to have flycheck enabled in web-mode, add an entry to this
+;;   ;; cond that matches the web-mode engine/content-type/etc and returns the
+;;   ;; appropriate checker.
+;;   (-when-let (checker (cond
+;;                        ((string= web-mode-content-type "vue")
+;;                         'javascript-eslint)))
+;;     (flycheck-mode)
+;;     (flycheck-select-checker checker)))
+
+;; (add-hook 'web-mode-hook #'my/configure-web-mode-flycheck-checkers)
+
+
+;(load-theme 'zenburn t)
 ;;(load-theme 'doom-one-light t)
 (load-theme 'doom-gruvbox t)
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -291,7 +326,7 @@
    '("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3"))
  '(objed-cursor-color "#d7d5d1")
  '(package-selected-packages
-   '(evil-mode evil-surround evil-org evil org-cliplink org-download embark-mode embark-consult embark doom-themes perspective rvm neotree yaml-mode projectile-ripgrep company-web company-box lsp-ui lsp-mode selectrum-prescient prescient selectrum consult avy rspec-mode which-key diff-hl vterm exec-path-from-shell zenburn-theme yasnippet-snippets web-mode vue-mode use-package undo-tree super-save smartparens projectile markdown-mode magit flycheck dumb-jump crux company))
+   '(deadgrep evil-mode evil-surround evil-org evil org-cliplink org-download embark-mode embark-consult embark doom-themes perspective rvm neotree yaml-mode projectile-ripgrep company-web company-box lsp-ui lsp-mode selectrum-prescient prescient selectrum consult avy rspec-mode which-key diff-hl vterm exec-path-from-shell zenburn-theme yasnippet-snippets web-mode vue-mode use-package undo-tree super-save smartparens projectile markdown-mode magit flycheck dumb-jump crux company))
  '(pdf-view-midnight-colors (cons "#d7d5d1" "#222222"))
  '(rustic-ansi-faces
    ["#222222" "#d7d5d1" "#d7d5d1" "#d7d5d1" "#d7d5d1" "#d7d5d1" "#d7d5d1" "#d7d5d1"])
