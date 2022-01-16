@@ -3,6 +3,7 @@ filetype indent on
 filetype plugin on
 syntax on
 " colo desert
+colo zellner
 set updatetime=100
 set tabstop=4
 set shiftwidth=4

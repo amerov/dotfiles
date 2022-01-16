@@ -37,7 +37,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'airblade/vim-gitgutter'
 Plug 'rbong/vim-flog'
-" Plug 'vim-ruby/vim-ruby'
+Plug 'vim-ruby/vim-ruby'
 " Plug 'tpope/vim-rails'
 " Plug 'airblade/vim-localorie'
 " Plug 'stefanoverna/vim-i18n'
@@ -64,7 +64,7 @@ Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-haml'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'cakebaker/scss-syntax.vim'
-Plug 'leafOfTree/vim-vue-plugin'
+" Plug 'leafOfTree/vim-vue-plugin'
 " Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'slim-template/vim-slim'
 
@@ -290,20 +290,19 @@ let g:jellybeans_overrides = {
       \    'jsThis': { 'guifg': 'cf6a4c' }
       \}
 
-" set background=light
-set background=dark
+set background=light
+" set background=dark
 
 " let g:jellybeans_background_color="000000"
 " colorscheme jellybeans
 " colo dracula
-colorscheme gruvbox
+" colorscheme gruvbox
 " colorscheme PaperColor
 " colorscheme spacegray
-" colorscheme lucius
+colorscheme lucius
 " colo everforest
 " colo one
 " colo solarized8
-" colo snow
 " colo afterglow
 " colo kuroi
 " colo monokai
@@ -447,7 +446,7 @@ map <leader>p p=`]
 map <leader>sb :BLines<CR>
 map <leader>sl :Lines<CR>
 nnoremap <leader>fs :w<CR>
-" imap <C-l> <Esc>:w<CR>
+imap <C-l> <Esc>:w<CR>
 map <leader>gg :Git<CR>
 map <leader>gB :Git blame<CR>
 map <leader>gc :Git checkout
@@ -630,7 +629,7 @@ lua <<EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = { "ruby","javascript","html","json","python","yaml","css","scss", "comment", "vue" }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   -- ensure_installed = { "ruby", "comment" }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  -- ignore_install = { "vue" }, -- List of parsers to ignore installing
+  ignore_install = { "ruby" }, -- List of parsers to ignore installing
   highlight = {
     enable = true,              -- false will disable the whole extension
     disable = { "ruby" },  -- list of language that will be disabled
@@ -651,11 +650,11 @@ require'nvim-treesitter.configs'.setup {
   },
  indent = {
     enable = true,
-    -- disable = { "vue" },
+    disable = { "ruby" },
   },
   matchup = {
     enable = true,              -- mandatory, false will disable the whole extension
-    -- disable = { "vue" },  -- optional, list of language that will be disabled
+    disable = { "ruby" },  -- optional, list of language that will be disabled
   },
 }
 EOF
@@ -751,7 +750,7 @@ cmp.setup {
     ['<C-e>'] = cmp.mapping.close(),
     ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
+      select = false,
     },
  ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then

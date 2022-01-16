@@ -74,6 +74,15 @@
 (use-package evil :ensure t)
 (use-package evil-surround :ensure t)
 (use-package deadgrep :ensure t)
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook))
+(setq dashboard-items '((recents  . 10)
+                        (bookmarks . 5)
+                        (projects . 5)
+                        (agenda . 10)
+                        (registers . 5)))
 
 (global-set-key (kbd "<f5>") #'deadgrep)
 ;; (use-package evil-org
@@ -123,8 +132,8 @@
 (global-diff-hl-mode t)
 (which-key-mode t)
 (selectrum-mode t)
+(selectrum-prescient-mode +1)
 (prescient-persist-mode +1)
-
 ;(desktop-save-mode t)
 (super-save-mode t)
 
@@ -136,7 +145,6 @@
 (setq inhibit-startup-message t)
 (setq org-directory "~/Dropbox/orgfiles/org")
 (setq org-default-notes-file (concat org-directory "/todo.org"))
-
 (setq org-capture-templates
       '(("t" "Todo"  entry
                (file "~/Dropbox/orgfiles/org/todo.org")
@@ -149,6 +157,9 @@
                "* %?" :empty-lines 0)
         ("i" "Idea"  entry
                (file "~/Dropbox/orgfiles/org/ideas.org")
+               "* %?" :empty-lines 0)
+        ("m" "Maybe"  entry
+               (file "~/Dropbox/orgfiles/org/maybe.org")
                "* %?" :empty-lines 0)
         ("e" "English words"  entry
                (file "~/Dropbox/orgfiles/org/english.words.org")
@@ -169,6 +180,7 @@
 (setq org-src-fontify-natively t)
 (setq org-agenda-start-with-log-mode t)
 (setq org-log-done 'time)
+(setq org-startup-folded t)
 (global-set-key (kbd "C-c l") #'org-store-link)
 (global-set-key (kbd "C-c a") #'org-agenda)
 (global-set-key (kbd "C-c c") #'org-capture)
@@ -286,8 +298,8 @@
 
 
 ;(load-theme 'zenburn t)
-;;(load-theme 'doom-one-light t)
-(load-theme 'doom-gruvbox t)
+;; (load-theme 'doom-one-light t)
+;; (load-theme 'doom-gruvbox t)
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
@@ -326,7 +338,7 @@
    '("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3"))
  '(objed-cursor-color "#d7d5d1")
  '(package-selected-packages
-   '(deadgrep evil-mode evil-surround evil-org evil org-cliplink org-download embark-mode embark-consult embark doom-themes perspective rvm neotree yaml-mode projectile-ripgrep company-web company-box lsp-ui lsp-mode selectrum-prescient prescient selectrum consult avy rspec-mode which-key diff-hl vterm exec-path-from-shell zenburn-theme yasnippet-snippets web-mode vue-mode use-package undo-tree super-save smartparens projectile markdown-mode magit flycheck dumb-jump crux company))
+   '(dashboard deadgrep evil-mode evil-surround evil-org evil org-cliplink org-download embark-mode embark-consult embark doom-themes perspective rvm neotree yaml-mode projectile-ripgrep company-web company-box lsp-ui lsp-mode selectrum-prescient prescient selectrum consult avy rspec-mode which-key diff-hl vterm exec-path-from-shell zenburn-theme yasnippet-snippets web-mode vue-mode use-package undo-tree super-save smartparens projectile markdown-mode magit flycheck dumb-jump crux company))
  '(pdf-view-midnight-colors (cons "#d7d5d1" "#222222"))
  '(rustic-ansi-faces
    ["#222222" "#d7d5d1" "#d7d5d1" "#d7d5d1" "#d7d5d1" "#d7d5d1" "#d7d5d1" "#d7d5d1"])
