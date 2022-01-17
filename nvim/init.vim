@@ -37,7 +37,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'airblade/vim-gitgutter'
 Plug 'rbong/vim-flog'
-Plug 'vim-ruby/vim-ruby'
+" Plug 'vim-ruby/vim-ruby'
 " Plug 'tpope/vim-rails'
 " Plug 'airblade/vim-localorie'
 " Plug 'stefanoverna/vim-i18n'
@@ -83,6 +83,8 @@ Plug 'aonemd/kuroi.vim'
 Plug 'crusoexia/vim-monokai'
 Plug 'Lokaltog/vim-monotone'
 Plug 'fxn/vim-monochrome'
+Plug 'pbrisbin/vim-colors-off'
+Plug 'ajmwagar/vim-deus'
 Plug 'sainnhe/everforest'
 
 Plug 'fatih/vim-go'
@@ -290,8 +292,8 @@ let g:jellybeans_overrides = {
       \    'jsThis': { 'guifg': 'cf6a4c' }
       \}
 
-set background=light
-" set background=dark
+" set background=light
+set background=dark
 
 " let g:jellybeans_background_color="000000"
 " colorscheme jellybeans
@@ -299,7 +301,7 @@ set background=light
 " colorscheme gruvbox
 " colorscheme PaperColor
 " colorscheme spacegray
-colorscheme lucius
+" colorscheme lucius
 " colo everforest
 " colo one
 " colo solarized8
@@ -307,7 +309,7 @@ colorscheme lucius
 " colo kuroi
 " colo monokai
 " colo monotone
- " colo monochrome
+colo monochrome
 " hi NERDTreeFile guibg=none
 " hi NERDTreeFile guifg=none
 " hi gitcommitDiscarded guibg=none
@@ -382,6 +384,7 @@ let g:matchup_matchparen_offscreen = { 'method': 'popup' }
 
 autocmd FileType ruby,eruby,slim setlocal keywordprg=:vs\|\:term\ ri
 
+" autocmd FileType ruby setlocal syntax=off
 " let g:NERDTreeWinPos = "right"
 
 " autocmd vimLeavePre * NERDTreeClose
@@ -629,7 +632,7 @@ lua <<EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = { "ruby","javascript","html","json","python","yaml","css","scss", "comment", "vue" }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   -- ensure_installed = { "ruby", "comment" }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  ignore_install = { "ruby" }, -- List of parsers to ignore installing
+  -- ignore_install = { "ruby" }, -- List of parsers to ignore installing
   highlight = {
     enable = true,              -- false will disable the whole extension
     disable = { "ruby" },  -- list of language that will be disabled
@@ -649,12 +652,12 @@ require'nvim-treesitter.configs'.setup {
     },
   },
  indent = {
-    enable = true,
-    disable = { "ruby" },
+    enable = true
+    -- disable = { "ruby" },
   },
   matchup = {
-    enable = true,              -- mandatory, false will disable the whole extension
-    disable = { "ruby" },  -- optional, list of language that will be disabled
+    enable = true              -- mandatory, false will disable the whole extension
+    -- disable = { "ruby" },  -- optional, list of language that will be disabled
   },
 }
 EOF
@@ -711,10 +714,16 @@ let g:nvim_tree_show_icons = {
    \ }
 
 lua <<EOF
-  require'nvim-tree'.setup({   filters = {
+  require'nvim-tree'.setup({
+  filters = {
     dotfiles = false,
     custom = {".git"}
-  }, })
+    },
+  view = {
+    side = "right",
+    -- auto_resize = true
+    }
+  })
 EOF
 
 
@@ -816,3 +825,8 @@ let g:lastplace_open_folds = 1
 "     }
 " )
 " EOF
+
+augroup illuminate_augroup
+    autocmd!
+    autocmd VimEnter * hi illuminatedWord cterm=underline gui=underline
+augroup END
