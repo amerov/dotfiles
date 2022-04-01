@@ -2,8 +2,8 @@ set nocompatible
 filetype indent on
 filetype plugin on
 syntax on
-" colo desert
-colo zellner
+colo desert
+" colo koehler
 set updatetime=100
 set tabstop=4
 set shiftwidth=4
@@ -19,6 +19,7 @@ set autoindent
 " set cindent
 set expandtab
 set smartindent
+set breakindent
 set ruler
 set modeline
 set smarttab

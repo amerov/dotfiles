@@ -4,3 +4,6 @@
 /tags
 .tern-port
 /.vscode/
+.emacs-buffers
+.emacs.desktop
+.emacs.desktop.lock
